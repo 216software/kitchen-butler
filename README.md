@@ -11,6 +11,13 @@ source venv/bin/activate
 pip install -e .
 kb init
 kb setup --name "Your Name" --calories 2500 --protein 100
+
+# Try it out:
+kb add "Chicken Breast" 16 --unit oz
+kb add "Broccoli" 2 --unit cup
+kb add "Rice (White)" 3 --unit "cup cooked"
+kb pantry
+kb suggest
 ```
 
 ## CLI Usage
