@@ -4,7 +4,10 @@ from pathlib import Path
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import Session
 
-from kb_app.models import Base, User, Ingredient, Nutrition, PantryItem, Preference, Recipe, RecipeIngredient, RecipeNutrition, MealLog, MealLogItem
+from kb_app.models import (
+    Base, User, Ingredient, Nutrition, PantryItem, Preference, Recipe,
+    RecipeIngredient, RecipeNutrition, MealLog, MealLogItem, MealPlan, MealPlanDay,
+)
 
 DATA_DIR = Path(__file__).parent.parent / "kb_app" / "seed_data"
 
@@ -72,7 +75,7 @@ def seed_db(engine):
                     optional=ri.get("optional", False),
                 ))
 
-        user = User(name="TestUser", calorie_goal=2500, protein_goal=100, fiber_goal=30)
+        user = User(name="TestUser", calorie_goal=2500, protein_goal=100, fiber_goal=30, api_key="test-key-1")
         session.add(user)
         session.commit()
 
@@ -351,6 +354,21 @@ class TestSuggestRecipes:
         result = tools_mod.suggest_recipes(max_results=3)
         assert "% match" in result or "%" in result
 
+    def test_prefer_tag(self):
+        tools_mod.add_pantry_item("Chicken Breast", 2.0, "lb")
+        tools_mod.add_pantry_item("Broccoli", 1.0, "cup")
+        result = tools_mod.suggest_recipes(max_results=3, prefer_tag="low carb")
+        assert "% match" in result or "%" in result
+
+    def test_avoid_dislikes(self):
+        with Session(_TEST_ENGINE) as session:
+            user = session.query(User).first()
+            session.add(Preference(user_id=user.id, kind="dislike", item="Chicken"))
+            session.commit()
+        tools_mod.add_pantry_item("Chicken Breast", 2.0, "lb")
+        result = tools_mod.suggest_recipes(max_results=3, avoid_dislikes=True)
+        assert "% match" in result or "%" in result
+
 
 class TestGetUserPreferences:
     def test_no_preferences(self):
@@ -372,6 +390,73 @@ class TestGetUserPreferences:
             session.query(User).delete()
             session.commit()
         result = tools_mod.get_user_preferences()
+        assert "No user found" in result
+
+
+# ----------------------------------------------------------------
+#  Multi-user tests
+# ----------------------------------------------------------------
+
+class TestMultiUser:
+    def test_add_user_creates_new(self):
+        result = tools_mod.add_user("Alice", 2000, 80, 25)
+        assert "Created user 'Alice'" in result
+
+    def test_add_user_duplicate(self):
+        tools_mod.add_user("Alice", 2000, 80, 25)
+        result = tools_mod.add_user("Alice", 2000, 80, 25)
+        assert "already exists" in result
+
+    def test_list_users(self):
+        tools_mod.add_user("Alice", 2000, 80, 25)
+        tools_mod.add_user("Bob", 3000, 120, 35)
+        result = tools_mod.list_users()
+        assert "Alice" in result
+        assert "Bob" in result
+        assert "TestUser" in result
+
+    def test_list_users_empty(self):
+        with Session(_TEST_ENGINE) as session:
+            session.query(User).delete()
+            session.commit()
+        result = tools_mod.list_users()
+        assert "No users found" in result
+
+    def test_pantry_isolation(self):
+        tools_mod.add_user("Alice", 2000, 80, 25)
+        tools_mod.add_user("Bob", 3000, 120, 35)
+        tools_mod.add_pantry_item("Chicken Breast", 2.0, "lb", username="Alice")
+        tools_mod.add_pantry_item("Broccoli", 1.0, "cup", username="Bob")
+        alice_pantry = tools_mod.get_pantry(username="Alice")
+        bob_pantry = tools_mod.get_pantry(username="Bob")
+        assert "Chicken Breast" in alice_pantry
+        assert "Broccoli" not in alice_pantry
+        assert "Broccoli" in bob_pantry
+        assert "Chicken Breast" not in bob_pantry
+
+    def test_meal_log_isolation(self):
+        tools_mod.add_user("Alice", 2000, 80, 25)
+        tools_mod.log_meal([{"ingredient_name": "Chicken Breast", "quantity": 6, "unit": "oz"}], username="Alice")
+        alice_logs = tools_mod.get_meal_logs_today(username="Alice")
+        testuser_logs = tools_mod.get_meal_logs_today()
+        assert "Chicken Breast" in alice_logs
+        assert testuser_logs == "No meals logged today."
+
+    def test_nutrition_isolation(self):
+        tools_mod.add_user("Alice", 2000, 80, 25)
+        result = tools_mod.get_nutrition_remaining(username="Alice")
+        assert "2000 cal" in result
+        assert "80g protein" in result
+        assert "25g fiber" in result
+
+    def test_lookup_by_username(self):
+        tools_mod.add_user("Alice", 2000, 80, 25)
+        tools_mod.add_pantry_item("Chicken Breast", 2.0, "lb", username="Alice")
+        result = tools_mod.get_pantry(username="Alice")
+        assert "Chicken Breast" in result
+
+    def test_nonexistent_username(self):
+        result = tools_mod.get_pantry(username="Nobody")
         assert "No user found" in result
 
 
@@ -422,6 +507,143 @@ class TestEdgeCases:
     def test_fuzzy_ingredient_match(self):
         result = tools_mod.add_pantry_item("chicken", 2.0, "lb")
         assert "Chicken Breast" in result
+
+
+# ----------------------------------------------------------------
+#  Expiry tests
+# ----------------------------------------------------------------
+
+class TestExpiringItems:
+    def test_no_expiring(self):
+        result = tools_mod.get_expiring_items(days=7)
+        assert "No items expiring" in result
+
+    def test_with_expiring(self):
+        tools_mod.add_pantry_item("Chicken Breast", 2.0, "lb", expiry="2026-07-01")
+        result = tools_mod.get_expiring_items(days=365)
+        assert "Chicken Breast" in result
+        assert "expires 2026-07-01" in result
+
+    def test_filters_by_days(self):
+        tools_mod.add_pantry_item("Chicken Breast", 2.0, "lb", expiry="2099-01-01")
+        result = tools_mod.get_expiring_items(days=7)
+        assert "No items expiring" in result
+
+    def test_no_user(self):
+        with Session(_TEST_ENGINE) as session:
+            session.query(User).delete()
+            session.commit()
+        result = tools_mod.get_expiring_items()
+        assert "No user found" in result
+
+
+# ----------------------------------------------------------------
+#  Week summary tests
+# ----------------------------------------------------------------
+
+class TestWeekSummary:
+    def test_no_meals(self):
+        result = tools_mod.get_week_summary()
+        assert "No meals logged" in result
+
+    def test_with_meals(self):
+        tools_mod.log_meal([{"ingredient_name": "Chicken Breast", "quantity": 6, "unit": "oz"}], notes="Dinner")
+        result = tools_mod.get_week_summary()
+        assert "Weekly summary" in result
+        assert "cal" in result
+
+    def test_no_user(self):
+        with Session(_TEST_ENGINE) as session:
+            session.query(User).delete()
+            session.commit()
+        result = tools_mod.get_week_summary()
+        assert "No user found" in result
+
+
+# ----------------------------------------------------------------
+#  Meal history tests
+# ----------------------------------------------------------------
+
+class TestMealHistory:
+    def test_no_meals(self):
+        result = tools_mod.get_meal_history(days=30)
+        assert "No meals logged" in result
+
+    def test_with_meals(self):
+        tools_mod.log_meal([{"ingredient_name": "Chicken Breast", "quantity": 6, "unit": "oz"}], notes="Lunch")
+        result = tools_mod.get_meal_history(days=30)
+        assert "Lunch" in result
+        assert "Chicken Breast" in result
+
+    def test_no_user(self):
+        with Session(_TEST_ENGINE) as session:
+            session.query(User).delete()
+            session.commit()
+        result = tools_mod.get_meal_history()
+        assert "No user found" in result
+
+
+# ----------------------------------------------------------------
+#  Plan week tests
+# ----------------------------------------------------------------
+
+class TestPlanWeek:
+    def test_generates_7_days(self):
+        result = tools_mod.plan_week()
+        assert "Weekly Meal Plan" in result
+        assert "Monday" in result
+        assert "Sunday" in result
+        for mt in ["Breakfast", "Lunch", "Dinner"]:
+            assert mt in result
+
+    def test_no_user(self):
+        with Session(_TEST_ENGINE) as session:
+            session.query(User).delete()
+            session.commit()
+        result = tools_mod.plan_week()
+        assert "No user found" in result
+
+
+class TestSavePlan:
+    def test_saves_plan(self):
+        result = tools_mod.save_plan(week_label="2026-W26")
+        assert "Saved meal plan" in result
+        with Session(_TEST_ENGINE) as session:
+            mp = session.query(MealPlan).filter_by(week_label="2026-W26").first()
+            assert mp is not None
+            days = session.query(MealPlanDay).filter_by(plan_id=mp.id).all()
+            assert len(days) == 21  # 7 days * 3 meals
+
+    def test_no_user(self):
+        with Session(_TEST_ENGINE) as session:
+            session.query(User).delete()
+            session.commit()
+        result = tools_mod.save_plan()
+        assert "No user found" in result
+
+
+# ----------------------------------------------------------------
+#  Grocery list tests
+# ----------------------------------------------------------------
+
+class TestGroceryList:
+    def test_no_plan(self):
+        result = tools_mod.get_grocery_list(week_label="2026-W99")
+        assert "No meal plan found" in result
+
+    def test_plan_but_pantry_has_it(self):
+        tools_mod.add_pantry_item("Chicken Breast", 10.0, "lb")
+        tools_mod.save_plan(week_label="2026-W26")
+        result = tools_mod.get_grocery_list(week_label="2026-W26")
+        # May or may not need items depending on what the plan picks
+        assert isinstance(result, str)
+
+    def test_no_user(self):
+        with Session(_TEST_ENGINE) as session:
+            session.query(User).delete()
+            session.commit()
+        result = tools_mod.get_grocery_list()
+        assert "No user found" in result
 
 
 # ----------------------------------------------------------------

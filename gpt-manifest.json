@@ -1,0 +1,19 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Kitchen Butler",
+  "name_for_model": "kitchen_butler",
+  "description_for_human": "Manage your kitchen: track pantry, log meals, plan menus, and get recipe suggestions.",
+  "description_for_model": "Helps users manage their kitchen — track pantry ingredients, log meals with nutrition, search and add recipes, get recipe suggestions based on what's in the pantry, generate weekly meal plans, and create shopping lists. The user must provide their API key. Ask them to sign up at https://kb-gpt.216software.com/auth/signup if they don't have one.",
+  "auth": {
+    "type": "bearer",
+    "verification_url": "https://kb-gpt.216software.com/auth/whoami-bearer",
+    "instructions": "Users get their API key by signing up. Ask them to sign up at https://kb-gpt.216software.com/auth/signup or check their existing key by visiting https://kb-gpt.216software.com/auth/whoami."
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://kb-gpt.216software.com/openapi.json"
+  },
+  "logo_url": "https://kb-gpt.216software.com/logo.png",
+  "contact_email": "support@216software.com",
+  "legal_info_url": "https://216software.com/legal"
+}

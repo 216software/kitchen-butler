@@ -1,0 +1,29 @@
+# Kitchen Butler in the cloud
+
+- multi user
+
+- People can use it from within the ChatGPT app because we will create a
+  custom GPT that is an API wrapper around the MCP server.
+
+- I want to support authentication where people go to my website,
+  authenticate, and then get some kind of authentication data back if
+  they are successful.  Then they give this data to chatgpt, perhaps by
+  pasting it into the conversation.  Then when chatgpt wants to use my
+  MCP server, it will include the authentication data.
+
+- I need to create a custom GPT app that uses the specification by
+  chatgpt for their GPT store.
+
+- People that use a tool like opencode or claude code should be able to
+  directly access the MCP server and do not need the custom GPT wrapper.
+
+- People using the MCP server also need to authenticate and then provide
+  the authentication token on every request.
+
+- I have apache running on my internet host.  I wan set up virtual hosts
+  so that I can expose the MCP server as kb-mcp.216software.com and
+  expose the GPT server at kb-gpt.216software.com from the same box.
+  Apache can use mod_rewrite to proxy requests to either the MCP server,
+  or, the GPT server.
+
+

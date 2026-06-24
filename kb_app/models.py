@@ -1,3 +1,4 @@
+import secrets
 from datetime import date, datetime
 from typing import Optional
 from sqlalchemy import String, Integer, Float, Boolean, Date, DateTime, Text, JSON, ForeignKey
@@ -12,7 +13,8 @@ class User(Base):
     __tablename__ = "users"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str] = mapped_column(String(128))
+    name: Mapped[str] = mapped_column(String(128), unique=True)
+    api_key: Mapped[str] = mapped_column(String(128), default=lambda: secrets.token_hex(32))
     calorie_goal: Mapped[int] = mapped_column(default=2500)
     protein_goal: Mapped[int] = mapped_column(default=100)
     fiber_goal: Mapped[int] = mapped_column(default=30)

@@ -20,13 +20,17 @@ def init_db(engine=None):
     if engine is None:
         engine = get_engine()
     Base.metadata.create_all(engine)
-    # add tags column to existing databases (safe to re-run)
+    # migrations for existing databases (safe to re-run)
     with engine.connect() as conn:
-        try:
-            conn.execute(text("ALTER TABLE recipes ADD COLUMN tags TEXT DEFAULT '[]'"))
-            conn.commit()
-        except Exception:
-            conn.rollback()
+        for stmt in [
+            "ALTER TABLE recipes ADD COLUMN tags TEXT DEFAULT '[]'",
+            "ALTER TABLE users ADD COLUMN api_key VARCHAR(128)",
+        ]:
+            try:
+                conn.execute(text(stmt))
+                conn.commit()
+            except Exception:
+                conn.rollback()
     return engine
 
 
