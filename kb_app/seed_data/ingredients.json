@@ -63,5 +63,6 @@
   {"name": "Crushed Red Pepper", "category": "spices", "default_unit": "tsp", "nutrition": {"per_unit": "tsp", "calories": 3, "protein_g": 0.1, "fiber_g": 0.3}},
   {"name": "Canned Corn", "category": "canned", "default_unit": "cup", "nutrition": {"per_unit": "cup", "calories": 132, "protein_g": 4.2, "fiber_g": 3.4}},
   {"name": "Peanut Butter", "category": "condiments", "default_unit": "tbsp", "nutrition": {"per_unit": "tbsp", "calories": 94, "protein_g": 4.0, "fiber_g": 1.0}},
-  {"name": "Vegetable Oil Spray", "category": "condiments", "default_unit": "spray", "nutrition": {"per_unit": "spray", "calories": 2, "protein_g": 0, "fiber_g": 0}}
+  {"name": "Vegetable Oil Spray", "category": "condiments", "default_unit": "spray", "nutrition": {"per_unit": "spray", "calories": 2, "protein_g": 0, "fiber_g": 0}},
+{"name": "Sweet Potato", "category": "vegetables", "default_unit": "medium", "nutrition": {"per_unit": "medium", "calories": 103, "protein_g": 2.3, "fiber_g": 3.8}}
 ]

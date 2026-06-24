@@ -350,5 +350,84 @@
     ],
     "instructions": "Cut tortillas into triangles and bake until crisp. Brown beef with taco seasoning. Arrange chips on a sheet pan, top with beef, beans, and cheese. Broil until cheese melts. Top with salsa, sour cream, and jalapenos.",
     "nutrition": {"calories": 560, "protein_g": 34, "fiber_g": 8}
+  },
+  {
+    "name": "Roasted Sweet Potato and Chicken Bowl",
+    "cuisine": "american",
+    "prep_time": 15,
+    "cook_time": 30,
+    "servings": 4,
+    "ingredients": [
+      {"name": "Chicken Breast", "quantity": 16, "unit": "oz"},
+      {"name": "Sweet Potato", "quantity": 2, "unit": "medium"},
+      {"name": "Broccoli", "quantity": 2, "unit": "cup"},
+      {"name": "Olive Oil", "quantity": 3, "unit": "tbsp"},
+      {"name": "Garlic", "quantity": 3, "unit": "clove"},
+      {"name": "Paprika", "quantity": 1, "unit": "tsp"},
+      {"name": "Rice (Brown)", "quantity": 2, "unit": "cup cooked"}
+    ],
+    "instructions": "Preheat oven to 425F. Cube chicken and sweet potato. Toss with olive oil, garlic, paprika, salt, pepper. Spread on sheet pan and roast 15 minutes. Add broccoli to pan, roast 10 more minutes. Serve over brown rice.",
+    "nutrition": {"calories": 480, "protein_g": 38, "fiber_g": 7}
+  },
+  {
+    "name": "Sweet Potato and Black Bean Tacos",
+    "cuisine": "mexican",
+    "prep_time": 10,
+    "cook_time": 20,
+    "servings": 4,
+    "ingredients": [
+      {"name": "Sweet Potato", "quantity": 2, "unit": "medium"},
+      {"name": "Black Beans", "quantity": 1, "unit": "cup"},
+      {"name": "Corn Tortilla", "quantity": 8, "unit": "medium"},
+      {"name": "Onion", "quantity": 0.5, "unit": "medium"},
+      {"name": "Garlic", "quantity": 2, "unit": "clove"},
+      {"name": "Olive Oil", "quantity": 2, "unit": "tbsp"},
+      {"name": "Chili Powder", "quantity": 1, "unit": "tsp"},
+      {"name": "Cumin", "quantity": 1, "unit": "tsp"},
+      {"name": "Salsa", "quantity": 4, "unit": "tbsp"},
+      {"name": "Sour Cream", "quantity": 4, "unit": "tbsp"},
+      {"name": "Cilantro", "quantity": 2, "unit": "tbsp"},
+      {"name": "Lime", "quantity": 1, "unit": "medium"}
+    ],
+    "instructions": "Peel and dice sweet potato. Toss with olive oil, chili powder, cumin, salt. Roast at 425F for 20 minutes. Saute diced onion and garlic until soft. Add black beans and warm through. Warm tortillas. Fill with sweet potato, beans, salsa, sour cream, cilantro, and lime juice.",
+    "nutrition": {"calories": 390, "protein_g": 14, "fiber_g": 12}
+  },
+  {
+    "name": "Sweet Potato Hash with Eggs",
+    "cuisine": "american",
+    "prep_time": 10,
+    "cook_time": 20,
+    "servings": 2,
+    "ingredients": [
+      {"name": "Sweet Potato", "quantity": 2, "unit": "medium"},
+      {"name": "Eggs", "quantity": 4, "unit": "large egg"},
+      {"name": "Onion", "quantity": 0.5, "unit": "medium"},
+      {"name": "Garlic", "quantity": 2, "unit": "clove"},
+      {"name": "Olive Oil", "quantity": 2, "unit": "tbsp"},
+      {"name": "Paprika", "quantity": 1, "unit": "tsp"}
+    ],
+    "instructions": "Peel and dice sweet potato into small cubes. Heat olive oil in a skillet over medium heat. Cook sweet potato with onion and garlic for 15 minutes, stirring occasionally, until tender and crispy. Season with paprika, salt, pepper. Make wells in the hash and crack eggs into them. Cover and cook 5 minutes until eggs are set.",
+    "nutrition": {"calories": 420, "protein_g": 20, "fiber_g": 6}
+  },
+  {
+    "name": "Chicken and Sweet Potato Curry",
+    "cuisine": "asian",
+    "prep_time": 10,
+    "cook_time": 25,
+    "servings": 4,
+    "ingredients": [
+      {"name": "Chicken Breast", "quantity": 16, "unit": "oz"},
+      {"name": "Sweet Potato", "quantity": 2, "unit": "medium"},
+      {"name": "Onion", "quantity": 1, "unit": "medium"},
+      {"name": "Garlic", "quantity": 3, "unit": "clove"},
+      {"name": "Olive Oil", "quantity": 2, "unit": "tbsp"},
+      {"name": "Ginger", "quantity": 1, "unit": "tsp"},
+      {"name": "Cumin", "quantity": 1, "unit": "tsp"},
+      {"name": "Chili Powder", "quantity": 1, "unit": "tsp"},
+      {"name": "Canned Tomatoes (Diced)", "quantity": 1, "unit": "cup"},
+      {"name": "Rice (White)", "quantity": 2, "unit": "cup cooked"}
+    ],
+    "instructions": "Cube chicken and sweet potato. Saute onion and garlic in olive oil. Add chicken and brown. Add sweet potato, ginger, cumin, chili powder, and canned tomatoes. Cover and simmer 20 minutes until sweet potato is tender. Serve over rice.",
+    "nutrition": {"calories": 450, "protein_g": 36, "fiber_g": 5}
   }
 ]

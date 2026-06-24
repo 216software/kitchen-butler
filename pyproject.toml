@@ -1,13 +1,12 @@
 [project]
 name = "kitchen-brain"
 version = "0.1.0"
-description = "LLM-interfaced kitchen management app"
+description = "Kitchen management app with MCP server for opencode integration"
 requires-python = ">=3.11"
 dependencies = [
     "click>=8.0",
     "sqlalchemy>=2.0",
-    "anthropic>=0.30",
-    "python-dotenv>=1.0",
+    "mcp>=1.0",
 ]
 
 [project.scripts]

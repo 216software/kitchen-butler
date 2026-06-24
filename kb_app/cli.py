@@ -1,5 +1,4 @@
 import click
-
 from kb_app.db import full_setup, DB_PATH
 
 
@@ -41,25 +40,9 @@ def setup(name, calories, protein):
 @cli.command()
 def pantry():
     """List all items in your pantry."""
-    from kb_app.db import get_session
-    from kb_app.models import PantryItem, User
+    from kb_app.engine.tools import get_pantry
 
-    session = get_session()
-    user = session.query(User).first()
-    if not user:
-        click.echo("No user found. Run 'kb setup' first.")
-        session.close()
-        return
-
-    items = session.query(PantryItem).filter_by(user_id=user.id).all()
-    if not items:
-        click.echo("Your pantry is empty.")
-    else:
-        for item in items:
-            ing = item.ingredient
-            expiry = f" (expires {item.expiry_date})" if item.expiry_date else ""
-            click.echo(f"  {ing.name}: {item.quantity} {item.unit}{expiry}")
-    session.close()
+    click.echo(get_pantry())
 
 
 @cli.command()
@@ -69,37 +52,38 @@ def pantry():
 @click.option("--expiry", default=None, help="Expiry date (YYYY-MM-DD)")
 def add(ingredient, quantity, unit, expiry):
     """Add an ingredient to your pantry."""
-    import json
-    from datetime import date
-    from kb_app.db import get_session
-    from kb_app.models import PantryItem, Ingredient, User
+    from kb_app.engine.tools import add_pantry_item
 
-    session = get_session()
-    user = session.query(User).first()
-    if not user:
-        click.echo("No user found. Run 'kb setup' first.")
-        session.close()
-        return
+    click.echo(add_pantry_item(ingredient, quantity, unit, expiry))
 
-    ing = session.query(Ingredient).filter(Ingredient.name.ilike(ingredient)).first()
-    if not ing:
-        ing = session.query(Ingredient).filter(Ingredient.name.ilike(f"%{ingredient}%")).first()
-    if not ing:
-        click.echo(f"Ingredient '{ingredient}' not found. Available: type any partial name.")
-        session.close()
-        return
 
-    unit = unit or ing.default_unit
-    expiry_date = date.fromisoformat(expiry) if expiry else None
+@cli.command()
+def day():
+    """Show today's nutritional summary."""
+    from kb_app.engine.tools import get_meal_logs_today, get_nutrition_remaining
 
-    item = PantryItem(user_id=user.id, ingredient_id=ing.id, quantity=quantity, unit=unit, expiry_date=expiry_date)
-    session.add(item)
-    session.commit()
-    click.echo(f"Added {quantity} {unit} of {ing.name} to pantry.")
-    session.close()
+    click.echo(get_meal_logs_today())
+    click.echo()
+    click.echo(get_nutrition_remaining())
+
+
+@cli.command()
+@click.option("--top", default=5, help="Number of suggestions to show")
+def suggest(top):
+    """Suggest recipes based on what's in your pantry."""
+    from kb_app.engine.tools import suggest_recipes
+
+    click.echo(suggest_recipes(max_results=top))
 
 
 @cli.command()
 def db_path():
     """Show the database file path."""
     click.echo(str(DB_PATH))
+
+
+@cli.command()
+def serve():
+    """Start the MCP server for opencode integration."""
+    from kb_app.mcp_server import run_server
+    run_server()
