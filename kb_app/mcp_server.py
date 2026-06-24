@@ -2,7 +2,7 @@ from mcp.server.fastmcp import FastMCP
 from kb_app.engine.tools import (
     get_pantry, search_recipes, get_recipe_detail, get_nutrition_remaining,
     log_meal, get_user_preferences, get_meal_logs_today, suggest_recipes,
-    add_pantry_item, update_pantry_item, delete_pantry_item,
+    add_pantry_item, update_pantry_item, delete_pantry_item, add_recipe,
 )
 
 mcp = FastMCP("Kitchen Brain")
@@ -15,11 +15,12 @@ def kb_get_pantry() -> str:
 
 
 @mcp.tool()
-def kb_search_recipes(query: str = "", cuisine: str = "", max_results: int = 5) -> str:
-    """Search for recipes by name, cuisine, or ingredient.
+def kb_search_recipes(query: str = "", cuisine: str = "", tag: str = "", max_results: int = 5) -> str:
+    """Search for recipes by name, cuisine, or tag.
     Cuisine options: american, mexican, italian, asian.
+    Tag options: dinner, lunch, breakfast, soup, sandwich, low carb, vegan, vegetarian, gluten free
     """
-    return search_recipes(query, cuisine, max_results)
+    return search_recipes(query, cuisine, tag, max_results)
 
 
 @mcp.tool()
@@ -83,6 +84,27 @@ def kb_update_pantry_item(name: str, quantity: float, unit: str = None) -> str:
 def kb_delete_pantry_item(name: str) -> str:
     """Remove an ingredient from your pantry entirely."""
     return delete_pantry_item(name)
+
+
+@mcp.tool()
+def kb_add_recipe(
+    name: str,
+    cuisine: str,
+    instructions: str,
+    servings: int = 2,
+    prep_time: int = None,
+    cook_time: int = None,
+    ingredients: list = None,
+    nutrition: dict = None,
+    tags: list = None,
+) -> str:
+    """Add a new recipe with ingredients and optional nutrition.
+
+    Each ingredient should have: {"name": "...", "quantity": number, "unit": "...", "optional": bool}
+    Ingredients not found in the DB will be auto-created.
+    Nutrition format: {"calories": number, "protein_g": number, "fiber_g": number}
+    """
+    return add_recipe(name, cuisine, instructions, servings, prep_time, cook_time, ingredients, nutrition, tags)
 
 
 def run_server():

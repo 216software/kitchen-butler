@@ -5,6 +5,7 @@
     "prep_time": 15,
     "cook_time": 15,
     "servings": 4,
+    "tags": ["dinner", "low carb"],
     "ingredients": [
       {"name": "Chicken Breast", "quantity": 16, "unit": "oz"},
       {"name": "Bell Pepper", "quantity": 2, "unit": "medium"},
@@ -26,6 +27,7 @@
     "prep_time": 10,
     "cook_time": 15,
     "servings": 4,
+    "tags": ["dinner", "lunch", "vegetarian"],
     "ingredients": [
       {"name": "Pizza Dough", "quantity": 16, "unit": "oz"},
       {"name": "Pizza Sauce", "quantity": 1, "unit": "cup"},
@@ -43,6 +45,7 @@
     "prep_time": 10,
     "cook_time": 30,
     "servings": 4,
+    "tags": ["dinner"],
     "ingredients": [
       {"name": "Ground Beef", "quantity": 16, "unit": "oz"},
       {"name": "Pasta", "quantity": 4, "unit": "cup cooked"},
@@ -62,6 +65,7 @@
     "prep_time": 15,
     "cook_time": 10,
     "servings": 4,
+    "tags": ["dinner", "low carb"],
     "ingredients": [
       {"name": "Chicken Breast", "quantity": 16, "unit": "oz"},
       {"name": "Broccoli", "quantity": 2, "unit": "cup"},
@@ -82,6 +86,7 @@
     "prep_time": 5,
     "cook_time": 60,
     "servings": 2,
+    "tags": ["dinner", "lunch", "vegetarian"],
     "ingredients": [
       {"name": "Potatoes", "quantity": 2, "unit": "medium"},
       {"name": "Cheddar Cheese", "quantity": 2, "unit": "oz"},
@@ -98,6 +103,7 @@
     "prep_time": 10,
     "cook_time": 30,
     "servings": 6,
+    "tags": ["dinner", "lunch", "soup"],
     "ingredients": [
       {"name": "Chicken Breast", "quantity": 12, "unit": "oz"},
       {"name": "Chicken Broth", "quantity": 6, "unit": "cup"},
@@ -117,6 +123,7 @@
     "prep_time": 10,
     "cook_time": 10,
     "servings": 4,
+    "tags": ["dinner"],
     "ingredients": [
       {"name": "Ground Beef", "quantity": 16, "unit": "oz"},
       {"name": "Corn Tortilla", "quantity": 8, "unit": "medium"},
@@ -136,6 +143,7 @@
     "prep_time": 10,
     "cook_time": 15,
     "servings": 2,
+    "tags": ["dinner", "low carb", "gluten free"],
     "ingredients": [
       {"name": "Salmon Fillet", "quantity": 10, "unit": "oz"},
       {"name": "Broccoli", "quantity": 2, "unit": "cup"},
@@ -153,6 +161,7 @@
     "prep_time": 10,
     "cook_time": 10,
     "servings": 4,
+    "tags": ["dinner", "lunch"],
     "ingredients": [
       {"name": "Shrimp", "quantity": 12, "unit": "oz"},
       {"name": "Rice (White)", "quantity": 3, "unit": "cup cooked"},
@@ -171,6 +180,7 @@
     "prep_time": 5,
     "cook_time": 5,
     "servings": 1,
+    "tags": ["breakfast", "lunch", "low carb", "gluten free"],
     "ingredients": [
       {"name": "Eggs", "quantity": 2, "unit": "large egg"},
       {"name": "Cheddar Cheese", "quantity": 1, "unit": "oz"},
@@ -187,6 +197,7 @@
     "prep_time": 5,
     "cook_time": 10,
     "servings": 4,
+    "tags": ["dinner", "lunch", "vegan", "vegetarian", "gluten free"],
     "ingredients": [
       {"name": "Black Beans", "quantity": 2, "unit": "cup"},
       {"name": "Corn Tortilla", "quantity": 8, "unit": "medium"},
@@ -205,6 +216,7 @@
     "prep_time": 5,
     "cook_time": 15,
     "servings": 4,
+    "tags": ["dinner"],
     "ingredients": [
       {"name": "Shrimp", "quantity": 12, "unit": "oz"},
       {"name": "Pasta", "quantity": 4, "unit": "cup cooked"},
@@ -223,6 +235,7 @@
     "prep_time": 10,
     "cook_time": 10,
     "servings": 2,
+    "tags": ["dinner", "lunch"],
     "ingredients": [
       {"name": "Chicken Breast", "quantity": 8, "unit": "oz"},
       {"name": "Flour Tortilla", "quantity": 4, "unit": "medium"},
@@ -239,6 +252,7 @@
     "prep_time": 5,
     "cook_time": 20,
     "servings": 2,
+    "tags": ["dinner", "gluten free"],
     "ingredients": [
       {"name": "Pork Chop", "quantity": 12, "unit": "oz"},
       {"name": "Rice (White)", "quantity": 1, "unit": "cup cooked"},
@@ -255,6 +269,7 @@
     "prep_time": 5,
     "cook_time": 25,
     "servings": 4,
+    "tags": ["dinner"],
     "ingredients": [
       {"name": "Italian Sausage", "quantity": 16, "unit": "oz"},
       {"name": "Bell Pepper", "quantity": 2, "unit": "medium"},
@@ -272,6 +287,7 @@
     "prep_time": 15,
     "cook_time": 30,
     "servings": 4,
+    "tags": ["dinner", "gluten free"],
     "ingredients": [
       {"name": "Chicken Breast", "quantity": 16, "unit": "oz"},
       {"name": "Potatoes", "quantity": 3, "unit": "medium"},
@@ -290,6 +306,7 @@
     "prep_time": 2,
     "cook_time": 5,
     "servings": 1,
+    "tags": ["breakfast", "vegetarian"],
     "ingredients": [
       {"name": "Eggs", "quantity": 3, "unit": "large egg"},
       {"name": "Butter", "quantity": 1, "unit": "tbsp"},
@@ -304,6 +321,7 @@
     "prep_time": 10,
     "cook_time": 15,
     "servings": 4,
+    "tags": ["dinner", "lunch", "gluten free"],
     "ingredients": [
       {"name": "Chicken Breast", "quantity": 16, "unit": "oz"},
       {"name": "Black Beans", "quantity": 1, "unit": "cup"},
@@ -323,6 +341,7 @@
     "prep_time": 5,
     "cook_time": 15,
     "servings": 4,
+    "tags": ["dinner", "lunch", "vegan", "vegetarian"],
     "ingredients": [
       {"name": "Pasta", "quantity": 4, "unit": "cup cooked"},
       {"name": "Olive Oil", "quantity": 4, "unit": "tbsp"},
@@ -339,6 +358,7 @@
     "prep_time": 10,
     "cook_time": 10,
     "servings": 4,
+    "tags": ["dinner", "lunch"],
     "ingredients": [
       {"name": "Ground Beef", "quantity": 12, "unit": "oz"},
       {"name": "Corn Tortilla", "quantity": 12, "unit": "medium"},
@@ -357,6 +377,7 @@
     "prep_time": 15,
     "cook_time": 30,
     "servings": 4,
+    "tags": ["dinner", "gluten free"],
     "ingredients": [
       {"name": "Chicken Breast", "quantity": 16, "unit": "oz"},
       {"name": "Sweet Potato", "quantity": 2, "unit": "medium"},
@@ -375,6 +396,7 @@
     "prep_time": 10,
     "cook_time": 20,
     "servings": 4,
+    "tags": ["dinner", "lunch", "vegan", "vegetarian", "gluten free"],
     "ingredients": [
       {"name": "Sweet Potato", "quantity": 2, "unit": "medium"},
       {"name": "Black Beans", "quantity": 1, "unit": "cup"},
@@ -398,6 +420,7 @@
     "prep_time": 10,
     "cook_time": 20,
     "servings": 2,
+    "tags": ["breakfast", "brunch", "gluten free"],
     "ingredients": [
       {"name": "Sweet Potato", "quantity": 2, "unit": "medium"},
       {"name": "Eggs", "quantity": 4, "unit": "large egg"},
@@ -415,6 +438,7 @@
     "prep_time": 10,
     "cook_time": 25,
     "servings": 4,
+    "tags": ["dinner", "gluten free"],
     "ingredients": [
       {"name": "Chicken Breast", "quantity": 16, "unit": "oz"},
       {"name": "Sweet Potato", "quantity": 2, "unit": "medium"},

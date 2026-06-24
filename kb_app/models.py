@@ -86,6 +86,7 @@ class Recipe(Base):
     cook_time: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
     servings: Mapped[int] = mapped_column(Integer, default=2)
     instructions_text: Mapped[str] = mapped_column(Text)
+    tags: Mapped[str] = mapped_column(Text, default="[]")
 
     ingredients: Mapped[list["RecipeIngredient"]] = relationship(back_populates="recipe", cascade="all, delete-orphan")
     nutrition: Mapped[Optional["RecipeNutrition"]] = relationship(back_populates="recipe", uselist=False, cascade="all, delete-orphan")

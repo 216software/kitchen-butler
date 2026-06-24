@@ -19,6 +19,13 @@ def init_db(engine=None):
     if engine is None:
         engine = get_engine()
     Base.metadata.create_all(engine)
+    # add tags column to existing databases (safe to re-run)
+    with engine.connect() as conn:
+        try:
+            conn.execute(text("ALTER TABLE recipes ADD COLUMN tags TEXT DEFAULT '[]'"))
+            conn.commit()
+        except Exception:
+            conn.rollback()
     return engine
 
 
@@ -76,6 +83,7 @@ def seed_recipes(session: Session):
             cook_time=entry.get("cook_time"),
             servings=entry.get("servings", 2),
             instructions_text=entry["instructions"],
+            tags=json.dumps(entry.get("tags", [])),
         )
         session.add(recipe)
         session.flush()

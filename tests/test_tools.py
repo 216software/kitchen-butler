@@ -4,7 +4,7 @@ from pathlib import Path
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import Session
 
-from kb_app.models import Base, User, Ingredient, Nutrition, PantryItem, Preference, Recipe, RecipeIngredient, MealLog, MealLogItem
+from kb_app.models import Base, User, Ingredient, Nutrition, PantryItem, Preference, Recipe, RecipeIngredient, RecipeNutrition, MealLog, MealLogItem
 
 DATA_DIR = Path(__file__).parent.parent / "kb_app" / "seed_data"
 
@@ -55,6 +55,7 @@ def seed_db(engine):
                 cook_time=entry.get("cook_time"),
                 servings=entry.get("servings", 2),
                 instructions_text=entry["instructions"],
+                tags=json.dumps(entry.get("tags", [])),
             )
             session.add(recipe)
             session.flush()
@@ -421,3 +422,91 @@ class TestEdgeCases:
     def test_fuzzy_ingredient_match(self):
         result = tools_mod.add_pantry_item("chicken", 2.0, "lb")
         assert "Chicken Breast" in result
+
+
+# ----------------------------------------------------------------
+#  Recipe import tests
+# ----------------------------------------------------------------
+
+class TestAddRecipe:
+    def test_add_new_recipe(self):
+        ingredients = [
+            {"name": "Chicken Breast", "quantity": 1.0, "unit": "lb"},
+        ]
+        result = tools_mod.add_recipe(
+            "Test Recipe", "american", "Cook it.", 2,
+            ingredients=ingredients,
+        )
+        assert "Added recipe" in result
+        assert "id=" in result
+        with Session(_TEST_ENGINE) as session:
+            recipe = session.query(Recipe).filter_by(name="Test Recipe").first()
+            assert recipe is not None
+            assert recipe.servings == 2
+            ings = session.query(RecipeIngredient).filter_by(recipe_id=recipe.id).all()
+            assert len(ings) == 1
+
+    def test_duplicate_name(self):
+        tools_mod.add_recipe("Dup Recipe", "american", "Instructions.", ingredients=[])
+        result = tools_mod.add_recipe("Dup Recipe", "italian", "Other.", ingredients=[])
+        assert "already exists" in result
+
+    def test_auto_creates_unknown_ingredients(self):
+        result = tools_mod.add_recipe(
+            "New Dish", "asian", "Do stuff.", ingredients=[
+                {"name": "Dragon Fruit", "quantity": 1, "unit": "whole"},
+            ],
+        )
+        assert "Created new ingredients: Dragon Fruit" in result
+        with Session(_TEST_ENGINE) as session:
+            ing = session.query(Ingredient).filter_by(name="Dragon Fruit").first()
+            assert ing is not None
+            assert ing.category == "imported"
+
+    def test_with_nutrition(self):
+        tools_mod.add_recipe(
+            "Healthy Bowl", "american", "Mix.", ingredients=[],
+            nutrition={"calories": 350, "protein_g": 20, "fiber_g": 5},
+        )
+        with Session(_TEST_ENGINE) as session:
+            recipe = session.query(Recipe).filter_by(name="Healthy Bowl").first()
+            nut = session.query(RecipeNutrition).filter_by(recipe_id=recipe.id).first()
+            assert nut.per_serving_calories == 350
+            assert nut.protein_g == 20
+            assert nut.fiber_g == 5
+
+    def test_fuzzy_ingredient_match(self):
+        tools_mod.add_recipe(
+            "Fuzzy Test", "american", "Do it.", ingredients=[
+                {"name": "chicken breast", "quantity": 1, "unit": "lb"},
+            ],
+        )
+        with Session(_TEST_ENGINE) as session:
+            recipe = session.query(Recipe).filter_by(name="Fuzzy Test").first()
+            ri = session.query(RecipeIngredient).filter_by(recipe_id=recipe.id).first()
+            assert ri.ingredient.name == "Chicken Breast"
+
+    def test_add_with_tags(self):
+        result = tools_mod.add_recipe(
+            "Tagged Dish", "american", "Instructions.", tags=["dinner", "low carb"],
+            ingredients=[{"name": "Chicken Breast", "quantity": 1, "unit": "lb"}],
+        )
+        assert "Added recipe" in result
+        with Session(_TEST_ENGINE) as session:
+            recipe = session.query(Recipe).filter_by(name="Tagged Dish").first()
+            assert json.loads(recipe.tags) == ["dinner", "low carb"]
+
+    def test_search_by_tag(self):
+        result = tools_mod.search_recipes(tag="soup")
+        assert "Chicken and Rice Soup" in result
+
+    def test_search_by_tag_no_results(self):
+        result = tools_mod.search_recipes(tag="sandwich")
+        assert result == "No recipes found."
+
+    def test_recipe_detail_shows_tags(self):
+        with Session(_TEST_ENGINE) as session:
+            recipe = session.query(Recipe).first()
+            rid = recipe.id
+        result = tools_mod.get_recipe_detail(rid)
+        assert "Tags:" in result

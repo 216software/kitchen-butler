@@ -97,6 +97,18 @@ def remove(ingredient):
 
 
 @cli.command()
+@click.argument("file", type=click.Path(exists=True))
+def add_recipe(file):
+    """Add a recipe from a JSON file."""
+    import json
+    from kb_app.engine.tools import add_recipe as add_recipe_tool
+
+    with open(file) as f:
+        data = json.load(f)
+    click.echo(add_recipe_tool(**data))
+
+
+@cli.command()
 def db_path():
     """Show the database file path."""
     click.echo(str(DB_PATH))

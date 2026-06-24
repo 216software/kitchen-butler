@@ -1,8 +1,8 @@
 from datetime import date, datetime
 from kb_app.db import get_session
 from kb_app.models import (
-    Ingredient, PantryItem, Preference, Recipe, RecipeIngredient,
-    MealLog, MealLogItem, User,
+    Ingredient, Nutrition, PantryItem, Preference, Recipe, RecipeIngredient,
+    RecipeNutrition, MealLog, MealLogItem, User,
 )
 
 
@@ -32,13 +32,15 @@ def get_pantry() -> str:
     return "\n".join(lines)
 
 
-def search_recipes(query: str = "", cuisine: str = "", max_results: int = 5) -> str:
+def search_recipes(query: str = "", cuisine: str = "", tag: str = "", max_results: int = 5) -> str:
     session = get_session()
     q = session.query(Recipe)
     if query:
         q = q.filter(Recipe.name.ilike(f"%{query}%"))
     if cuisine:
         q = q.filter(Recipe.cuisine.ilike(f"%{cuisine}%"))
+    if tag:
+        q = q.filter(Recipe.tags.ilike(f"%{tag.lower()}%"))
     recipes = q.limit(max_results).all()
     if not recipes:
         session.close()
@@ -47,7 +49,10 @@ def search_recipes(query: str = "", cuisine: str = "", max_results: int = 5) -> 
     for r in recipes:
         ings = session.query(RecipeIngredient).filter_by(recipe_id=r.id).all()
         ing_names = [i.ingredient.name for i in ings]
-        lines.append(f"  [{r.id}] {r.name} ({r.cuisine}) — {r.servings} servings")
+        import json as _json
+        tags_list = _json.loads(r.tags) if r.tags else []
+        tag_str = f" [{', '.join(tags_list)}]" if tags_list else ""
+        lines.append(f"  [{r.id}] {r.name} ({r.cuisine}) — {r.servings} servings{tag_str}")
         lines.append(f"       Ingredients: {', '.join(ing_names)}")
     session.close()
     return "\n".join(lines)
@@ -61,6 +66,10 @@ def get_recipe_detail(recipe_id: int) -> str:
         return "Recipe not found."
     ings = session.query(RecipeIngredient).filter_by(recipe_id=r.id).all()
     parts = [f"# {r.name} ({r.cuisine})"]
+    import json as _json
+    tags_list = _json.loads(r.tags) if r.tags else []
+    if tags_list:
+        parts.append(f"Tags: {', '.join(tags_list)}")
     if r.prep_time:
         parts.append(f"Prep: {r.prep_time} min | Cook: {r.cook_time} min | Servings: {r.servings}")
     parts.append("\n## Ingredients")
@@ -297,3 +306,70 @@ def delete_pantry_item(name: str) -> str:
     session.commit()
     session.close()
     return f"Removed {ing_name} from pantry."
+
+
+def add_recipe(
+    name: str,
+    cuisine: str,
+    instructions: str,
+    servings: int = 2,
+    prep_time: int = None,
+    cook_time: int = None,
+    ingredients: list = None,
+    nutrition: dict = None,
+    tags: list = None,
+) -> str:
+    session = get_session()
+    existing = session.query(Recipe).filter(Recipe.name.ilike(name)).first()
+    if existing:
+        session.close()
+        return f"Recipe '{name}' already exists (id={existing.id})."
+
+    import json
+    recipe = Recipe(
+        name=name, cuisine=cuisine, servings=servings,
+        prep_time=prep_time, cook_time=cook_time,
+        instructions_text=instructions,
+        tags=json.dumps(tags or []),
+    )
+    session.add(recipe)
+    session.flush()
+
+    created = []
+    unknown = []
+
+    for ri in (ingredients or []):
+        ing = session.query(Ingredient).filter(Ingredient.name.ilike(ri["name"])).first()
+        if not ing:
+            ing = session.query(Ingredient).filter(Ingredient.name.ilike(f"%{ri['name']}%")).first()
+        if not ing:
+            ing = Ingredient(
+                name=ri["name"].strip().title(),
+                category=ri.get("category", "imported"),
+                default_unit=ri.get("unit", "unit"),
+            )
+            session.add(ing)
+            session.flush()
+            created.append(ing.name)
+        session.add(RecipeIngredient(
+            recipe_id=recipe.id, ingredient_id=ing.id,
+            quantity=ri["quantity"], unit=ri["unit"],
+            optional=ri.get("optional", False),
+        ))
+
+    if nutrition:
+        session.add(RecipeNutrition(
+            recipe_id=recipe.id,
+            per_serving_calories=nutrition.get("calories", 0),
+            protein_g=nutrition.get("protein_g", 0),
+            fiber_g=nutrition.get("fiber_g", 0),
+        ))
+
+    session.commit()
+    rid = recipe.id
+    session.close()
+
+    parts = [f"Added recipe '{name}' (id={rid}) with {len(ingredients or [])} ingredients."]
+    if created:
+        parts.append(f"Created new ingredients: {', '.join(created)}.")
+    return "\n".join(parts)
