@@ -1,4 +1,4 @@
-# Kitchen Brain — Application Plan
+# Kitchen Butler — Application Plan
 
 ## Overview
 An LLM-interfaced kitchen management app that tracks your pantry, logs meals, and suggests recipes. Designed to work with any **MCP-compatible LLM tool** (opencode, Claude Code, Cursor, Windsurf, etc.) — the LLM agent handles natural language parsing and KB is a pure data management layer.
@@ -75,7 +75,7 @@ grocery_purchase_items(purchase_id, ingredient_id, quantity, unit, price)
 ```
 User (natural language) → LLM tool (opencode / Claude Code / etc.) → MCP tools (stdio)
                                                                       ↓
-                                                                Kitchen Brain MCP Server
+                                                                Kitchen Butler MCP Server
                                                                       ↓
                                                                 SQLite DB
 ```
@@ -85,7 +85,7 @@ KB is purely a data management layer. All LLM reasoning, natural language parsin
 ## Directory Structure
 
 ```
-kitchen-brain/
+kitchen-butler/
 ├── kb              # CLI entry point (pip-installed)
 ├── pyproject.toml
 ├── README.md

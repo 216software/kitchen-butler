@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session, sessionmaker
 from kb_app.models import Base
 
 DATA_DIR = Path(__file__).parent / "seed_data"
-DB_PATH = Path.home() / ".local" / "share" / "kitchen-brain" / "kb.db"
+DB_PATH = Path.home() / ".local" / "share" / "kitchen-butler" / "kb.db"
 
 
 def get_engine(db_path: Path = DB_PATH):

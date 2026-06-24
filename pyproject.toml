@@ -1,5 +1,5 @@
 [project]
-name = "kitchen-brain"
+name = "kitchen-butler"
 version = "0.1.0"
 description = "Kitchen management app with MCP server for opencode integration"
 requires-python = ">=3.11"

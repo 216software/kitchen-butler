@@ -1,11 +1,11 @@
-# Kitchen Brain (KB)
+# Kitchen Butler (KB)
 
 A kitchen management app that tracks your pantry, logs meals, and suggests recipes. Exposes an **MCP server** so LLM tools (opencode, Claude Code, Cursor, Windsurf, etc.) can manage your kitchen data via natural language.
 
 ## Quick Start
 
 ```bash
-git clone <repo-url> && cd kitchen-brain
+git clone <repo-url> && cd kitchen-butler
 python3 -m venv venv
 source venv/bin/activate
 pip install -e .
@@ -47,8 +47,8 @@ Alternatively, add to `~/.config/claude/claude_desktop_config.json`:
 ```json
 {
   "mcpServers": {
-    "kitchen-brain": {
-      "command": "/path/to/kitchen-brain/venv/bin/kb",
+    "kitchen-butler": {
+      "command": "/path/to/kitchen-butler/venv/bin/kb",
       "args": ["serve"]
     }
   }
@@ -62,7 +62,7 @@ Add to your project's `opencode.json` (copy from `opencode.json.example`):
 ```json
 {
   "mcp": {
-    "kitchen-brain": {
+    "kitchen-butler": {
       "type": "local",
       "command": ["./venv/bin/kb", "serve"],
       "enabled": true
@@ -109,4 +109,4 @@ python -m pytest tests/ -v
 
 ## Data
 
-Database: `~/.local/share/kitchen-brain/kb.db`. Seeded with 65+ ingredients (with per-unit nutrition) and 24 recipes across American, Mexican, Italian, and Asian cuisines.
+Database: `~/.local/share/kitchen-butler/kb.db`. Seeded with 65+ ingredients (with per-unit nutrition) and 24 recipes across American, Mexican, Italian, and Asian cuisines.

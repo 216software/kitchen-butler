@@ -1,4 +1,4 @@
-# Kitchen Brain (KB) is an application.
+# Kitchen Butler (KB) is an application.
 
 You can interact with KB via an LLM using English.
 

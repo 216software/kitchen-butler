@@ -5,7 +5,7 @@ from kb_app.engine.tools import (
     add_pantry_item, update_pantry_item, delete_pantry_item, add_recipe,
 )
 
-mcp = FastMCP("Kitchen Brain")
+mcp = FastMCP("Kitchen Butler")
 
 
 @mcp.tool()

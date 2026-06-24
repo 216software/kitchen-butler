@@ -11,7 +11,7 @@ def cli():
 def init():
     """Initialize the database and seed with default data."""
     full_setup()
-    click.echo(f"Kitchen Brain database initialized at {DB_PATH}")
+    click.echo(f"Kitchen Butler database initialized at {DB_PATH}")
 
 
 @cli.command()
