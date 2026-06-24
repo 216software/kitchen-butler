@@ -1,0 +1,10 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "kitchen-brain": {
+      "type": "local",
+      "command": ["./venv/bin/kb", "serve"],
+      "enabled": true
+    }
+  }
+}

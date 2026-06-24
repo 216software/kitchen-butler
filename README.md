@@ -1,21 +1,15 @@
 # Kitchen Brain (KB)
 
-A kitchen management app that tracks your pantry, logs meals, and suggests recipes. Designed to work with **opencode** via MCP — you talk to opencode in natural language, and opencode uses KB's MCP tools to manage your data.
+A kitchen management app that tracks your pantry, logs meals, and suggests recipes. Exposes an **MCP server** so LLM tools (opencode, Claude Code, Cursor, Windsurf, etc.) can manage your kitchen data via natural language.
 
-## Setup
+## Quick Start
 
 ```bash
+git clone <repo-url> && cd kitchen-brain
 python3 -m venv venv
 source venv/bin/activate
-pip install -e ".[dev]"    # omit [dev] to skip test dependencies
-
-# Initialize database and seed with ingredients + recipes
+pip install -e .
 kb init
-```
-
-### First-time user profile
-
-```bash
 kb setup --name "Your Name" --calories 2500 --protein 100
 ```
 
@@ -30,46 +24,74 @@ kb setup --name "Your Name" --calories 2500 --protein 100
 | `kb suggest` | Suggest recipes based on pantry contents |
 | `kb day` | Show today's nutritional summary |
 | `kb db-path` | Show the database file path |
-| `kb serve` | Start the MCP server (for opencode integration) |
+| `kb serve` | Start the MCP server (stdio) |
+| `kb add-recipe <file>` | Import a recipe from JSON |
 
-## opencode Integration
+## MCP Integration
 
-Add KB as an MCP server in your `opencode.json` (adjust path to your project):
+KB runs an MCP server on stdio (`kb serve`). Configure it in your LLM tool of choice:
+
+### Claude Code
+
+`.mcp.json` is already included in the project for auto-discovery. No manual config needed — Claude Code finds it automatically.
+
+Alternatively, add to `~/.config/claude/claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "kitchen-brain": {
+      "command": "/path/to/kitchen-brain/venv/bin/kb",
+      "args": ["serve"]
+    }
+  }
+}
+```
+
+### opencode
+
+Add to your project's `opencode.json` (copy from `opencode.json.example`):
 
 ```json
 {
   "mcp": {
     "kitchen-brain": {
       "type": "local",
-      "command": ["/home/matt/Documents/brainmeal/venv/bin/kb", "serve"],
+      "command": ["./venv/bin/kb", "serve"],
       "enabled": true
     }
   }
 }
 ```
 
-Once configured, restart opencode. Then you can ask it things like:
+### Cursor / Windsurf / others
+
+All use the same pattern — configure a stdio MCP server pointing to `<project>/venv/bin/kb serve`. See your tool's MCP documentation.
+
+Once configured, you can ask your LLM things like:
 
 - "What's in my pantry?"
 - "What can I make for dinner with what I have?"
 - "I ate 4 slices of cheese pizza for lunch — log that"
 - "Show me today's nutrition"
 - "Add 2 lbs of chicken breast to my pantry"
-- "Give me the recipe for Chicken Stir Fry"
 
 ## MCP Tools
 
 | Tool | Description |
 |---|---|
 | `kb_get_pantry` | List all pantry items |
-| `kb_search_recipes` | Search recipes by name, cuisine, or ingredient |
+| `kb_search_recipes` | Search recipes by name, cuisine, or tag |
 | `kb_get_recipe_detail` | Get full recipe details |
 | `kb_suggest_recipes` | Suggest recipes ranked by pantry match |
 | `kb_log_meal` | Log a meal with ingredients |
 | `kb_get_meal_logs_today` | Get today's logged meals |
-| `kb_get_nutrition_remaining` | Get remaining calories/protein/fiber for today |
+| `kb_get_nutrition_remaining` | Get remaining calories/protein/fiber |
 | `kb_get_user_preferences` | Get dietary likes/dislikes |
-| `kb_add_pantry_item` | Add an item to the pantry |
+| `kb_add_pantry_item` | Add an item to the pantry (merges duplicates) |
+| `kb_update_pantry_item` | Set item quantity |
+| `kb_delete_pantry_item` | Remove item from pantry |
+| `kb_add_recipe` | Add a new recipe with ingredients |
 
 ## Tests
 
@@ -78,8 +100,6 @@ source venv/bin/activate
 python -m pytest tests/ -v
 ```
 
-Requires `pytest` (install via `pip install pytest`).
-
 ## Data
 
-Database: `~/.local/share/kitchen-brain/kb.db`. Seeded with 65 ingredients (with per-unit nutrition) and 20 recipes across American, Mexican, Italian, and Asian cuisines.
+Database: `~/.local/share/kitchen-brain/kb.db`. Seeded with 65+ ingredients (with per-unit nutrition) and 24 recipes across American, Mexican, Italian, and Asian cuisines.

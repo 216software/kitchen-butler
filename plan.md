@@ -1,14 +1,14 @@
 # Kitchen Brain — Application Plan
 
 ## Overview
-An LLM-interfaced kitchen management app that tracks your pantry, logs meals, and suggests recipes. Designed to work with **opencode** (or Claude Code) via MCP — the LLM agent handles natural language parsing and KB is a pure data management layer.
+An LLM-interfaced kitchen management app that tracks your pantry, logs meals, and suggests recipes. Designed to work with any **MCP-compatible LLM tool** (opencode, Claude Code, Cursor, Windsurf, etc.) — the LLM agent handles natural language parsing and KB is a pure data management layer.
 
 ## Tech Stack
 - **Language:** Python 3.11+
 - **Database:** SQLite (via `sqlalchemy`)
 - **CLI Framework:** `click`
 - **MCP Server:** `mcp` (FastMCP)
-- **LLM:** Handled externally by opencode/Claude Code via MCP (not embedded in KB)
+- **LLM:** Handled externally by any MCP-compatible tool (opencode, Claude Code, Cursor, etc.) via MCP (not embedded in KB)
 
 ## Data Model (SQLite)
 
@@ -68,19 +68,19 @@ grocery_purchase_items(purchase_id, ingredient_id, quantity, unit, price)
 
 ### 5. MCP Server
 - `kb serve` — starts the MCP server on stdio
-- Exposes all KB operations as MCP tools for opencode/Claude Code
+- Exposes all KB operations as MCP tools for any MCP-compatible LLM tool
 
 ## LLM Integration Pattern (MCP)
 
 ```
-User (natural language) → opencode/Claude Code → MCP tools (stdio)
-                                                    ↓
-                                              Kitchen Brain MCP Server
-                                                    ↓
-                                              SQLite DB
+User (natural language) → LLM tool (opencode / Claude Code / etc.) → MCP tools (stdio)
+                                                                      ↓
+                                                                Kitchen Brain MCP Server
+                                                                      ↓
+                                                                SQLite DB
 ```
 
-KB is purely a data management layer. All LLM reasoning, natural language parsing, and conversation management is handled by opencode or Claude Code. The user never calls KB tools directly — they talk to the LLM agent in natural language, and the agent uses KB's MCP tools to read/write data.
+KB is purely a data management layer. All LLM reasoning, natural language parsing, and conversation management is handled by the LLM tool. The user never calls KB tools directly — they talk to the LLM agent in natural language, and the agent uses KB's MCP tools to read/write data.
 
 ## Directory Structure
 
@@ -89,8 +89,9 @@ kitchen-brain/
 ├── kb              # CLI entry point (pip-installed)
 ├── pyproject.toml
 ├── README.md
-├── opencode.json   # opencode project config (model, MCP server)
-├── tui.json        # opencode TUI settings
+├── opencode.json.example   # opencode project config template
+├── tui.json.example        # opencode TUI settings template
+├── .mcp.json               # Claude Code MCP auto-discovery
 ├── kb_app/
 │   ├── __init__.py
 │   ├── cli.py              # click commands (CLI interface)
@@ -144,7 +145,7 @@ kitchen-brain/
 | Decision | Choice |
 |---|---|
 | Auth / multi-user | Single-user local app (no auth) |
-| LLM provider | Handled by opencode/Claude Code (not KB's concern) |
+| LLM provider | Handled by the MCP-compatible tool (not KB's concern) |
 | LLM integration | MCP stdio transport (no network setup needed) |
 | Recipe storage | Structured DB (not free-text) |
 | Nutrition data | Per-ingredient nutrition + recipe-level computed totals |

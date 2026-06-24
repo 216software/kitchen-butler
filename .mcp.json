@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "kitchen-brain": {
+      "command": "./venv/bin/kb",
+      "args": ["serve"]
+    }
+  }
+}
