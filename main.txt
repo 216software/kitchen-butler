@@ -1,0 +1,39 @@
+# Kitchen Brain (KB) is an application.
+
+You can interact with KB via an LLM using English.
+
+## Example conversations
+
+prompt 1:
+
+here's a few dishes / recipes / restaurants / cuisines that i like:
+asian food in general, fajitas, pizza.  I don't like casseroles or
+lasagna.
+
+and here's what's in my pantry: (list of ingredients follows, like
+potatoes, typical american condiments, etc).
+
+here's my calorie and nutrient daily goals: about 2500 calories, and
+about 100 grams of protein daily, and standard USRDA stuff for fiber,
+vitamins, etc.
+
+with all that in mind, what can i make for dinner?
+
+prompt 2:
+
+record that i just bought these groceries (maybe i upload an image of a
+receipt or provide a saved email receipt).
+
+prompt 3:
+
+record that i ate this meal (for example, four slices of cheese pizza)
+and keep a database of my calories and nutrients, sort of like
+myfitnesspal or any other calorie-counting app.
+
+prompt 4:
+
+make a menu plan for the week based on what I already have in my
+kitchen when possible.  Make me a grocery list of required ingredients
+that I don't already have.
+
+

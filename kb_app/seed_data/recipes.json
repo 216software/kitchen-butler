@@ -1,0 +1,354 @@
+[
+  {
+    "name": "Chicken Fajitas",
+    "cuisine": "mexican",
+    "prep_time": 15,
+    "cook_time": 15,
+    "servings": 4,
+    "ingredients": [
+      {"name": "Chicken Breast", "quantity": 16, "unit": "oz"},
+      {"name": "Bell Pepper", "quantity": 2, "unit": "medium"},
+      {"name": "Onion", "quantity": 1, "unit": "medium"},
+      {"name": "Flour Tortilla", "quantity": 4, "unit": "medium"},
+      {"name": "Olive Oil", "quantity": 2, "unit": "tbsp"},
+      {"name": "Chili Powder", "quantity": 1, "unit": "tsp"},
+      {"name": "Cumin", "quantity": 1, "unit": "tsp"},
+      {"name": "Lime", "quantity": 1, "unit": "medium"},
+      {"name": "Sour Cream", "quantity": 4, "unit": "tbsp"},
+      {"name": "Salsa", "quantity": 4, "unit": "tbsp"}
+    ],
+    "instructions": "Slice chicken and veggies into strips. Season chicken with chili powder, cumin, salt, pepper. Heat oil in a skillet over high heat. Cook chicken until done, remove. Saute peppers and onions until charred. Serve on warm tortillas with sour cream, salsa, and lime juice.",
+    "nutrition": {"calories": 520, "protein_g": 42, "fiber_g": 5}
+  },
+  {
+    "name": "Cheese Pizza",
+    "cuisine": "italian",
+    "prep_time": 10,
+    "cook_time": 15,
+    "servings": 4,
+    "ingredients": [
+      {"name": "Pizza Dough", "quantity": 16, "unit": "oz"},
+      {"name": "Pizza Sauce", "quantity": 1, "unit": "cup"},
+      {"name": "Mozzarella Cheese", "quantity": 8, "unit": "oz"},
+      {"name": "Parmesan Cheese", "quantity": 2, "unit": "tbsp"},
+      {"name": "Olive Oil", "quantity": 1, "unit": "tbsp"},
+      {"name": "Oregano", "quantity": 1, "unit": "tsp"}
+    ],
+    "instructions": "Preheat oven to 475F. Stretch dough into a round. Spread sauce, top with shredded mozzarella and parmesan. Drizzle olive oil and sprinkle oregano. Bake 12-15 minutes until golden.",
+    "nutrition": {"calories": 410, "protein_g": 18, "fiber_g": 2}
+  },
+  {
+    "name": "Spaghetti Bolognese",
+    "cuisine": "italian",
+    "prep_time": 10,
+    "cook_time": 30,
+    "servings": 4,
+    "ingredients": [
+      {"name": "Ground Beef", "quantity": 16, "unit": "oz"},
+      {"name": "Pasta", "quantity": 4, "unit": "cup cooked"},
+      {"name": "Canned Tomatoes (Diced)", "quantity": 2, "unit": "cup"},
+      {"name": "Onion", "quantity": 1, "unit": "medium"},
+      {"name": "Garlic", "quantity": 3, "unit": "clove"},
+      {"name": "Olive Oil", "quantity": 2, "unit": "tbsp"},
+      {"name": "Italian Seasoning", "quantity": 1, "unit": "tsp"},
+      {"name": "Parmesan Cheese", "quantity": 4, "unit": "tbsp"}
+    ],
+    "instructions": "Cook pasta according to package. Saute diced onion and garlic in olive oil. Add ground beef, cook until browned. Add canned tomatoes and Italian seasoning. Simmer 20 minutes. Serve sauce over pasta with parmesan.",
+    "nutrition": {"calories": 620, "protein_g": 38, "fiber_g": 4}
+  },
+  {
+    "name": "Chicken Stir Fry",
+    "cuisine": "asian",
+    "prep_time": 15,
+    "cook_time": 10,
+    "servings": 4,
+    "ingredients": [
+      {"name": "Chicken Breast", "quantity": 16, "unit": "oz"},
+      {"name": "Broccoli", "quantity": 2, "unit": "cup"},
+      {"name": "Bell Pepper", "quantity": 1, "unit": "medium"},
+      {"name": "Carrot", "quantity": 2, "unit": "medium"},
+      {"name": "Soy Sauce", "quantity": 3, "unit": "tbsp"},
+      {"name": "Garlic", "quantity": 2, "unit": "clove"},
+      {"name": "Ginger", "quantity": 1, "unit": "tsp"},
+      {"name": "Vegetable Oil", "quantity": 2, "unit": "tbsp"},
+      {"name": "Rice (White)", "quantity": 2, "unit": "cup cooked"}
+    ],
+    "instructions": "Cook rice. Cube chicken. Heat oil in wok over high heat. Cook chicken until done, remove. Stir fry broccoli, bell pepper, carrot for 3 minutes. Add garlic and ginger, cook 30 seconds. Return chicken, add soy sauce. Toss everything. Serve over rice.",
+    "nutrition": {"calories": 440, "protein_g": 38, "fiber_g": 5}
+  },
+  {
+    "name": "Loaded Baked Potato",
+    "cuisine": "american",
+    "prep_time": 5,
+    "cook_time": 60,
+    "servings": 2,
+    "ingredients": [
+      {"name": "Potatoes", "quantity": 2, "unit": "medium"},
+      {"name": "Cheddar Cheese", "quantity": 2, "unit": "oz"},
+      {"name": "Bacon", "quantity": 4, "unit": "slice"},
+      {"name": "Sour Cream", "quantity": 2, "unit": "tbsp"},
+      {"name": "Butter", "quantity": 1, "unit": "tbsp"}
+    ],
+    "instructions": "Preheat oven to 400F. Scrub potatoes, pierce with fork, bake 60 minutes. Cook bacon until crisp, crumble. Split potatoes, fluff inside. Top with butter, cheese, bacon, and sour cream.",
+    "nutrition": {"calories": 460, "protein_g": 18, "fiber_g": 5}
+  },
+  {
+    "name": "Chicken and Rice Soup",
+    "cuisine": "american",
+    "prep_time": 10,
+    "cook_time": 30,
+    "servings": 6,
+    "ingredients": [
+      {"name": "Chicken Breast", "quantity": 12, "unit": "oz"},
+      {"name": "Chicken Broth", "quantity": 6, "unit": "cup"},
+      {"name": "Rice (White)", "quantity": 1, "unit": "cup cooked"},
+      {"name": "Carrot", "quantity": 2, "unit": "medium"},
+      {"name": "Celery", "quantity": 2, "unit": "stalk"},
+      {"name": "Onion", "quantity": 1, "unit": "medium"},
+      {"name": "Garlic", "quantity": 2, "unit": "clove"},
+      {"name": "Olive Oil", "quantity": 1, "unit": "tbsp"}
+    ],
+    "instructions": "Saute diced onion, carrot, celery, and garlic in olive oil. Add broth and bring to boil. Add chicken, reduce heat, simmer 20 minutes. Shred chicken. Add cooked rice and season. Serve hot.",
+    "nutrition": {"calories": 280, "protein_g": 24, "fiber_g": 3}
+  },
+  {
+    "name": "Beef Tacos",
+    "cuisine": "mexican",
+    "prep_time": 10,
+    "cook_time": 10,
+    "servings": 4,
+    "ingredients": [
+      {"name": "Ground Beef", "quantity": 16, "unit": "oz"},
+      {"name": "Corn Tortilla", "quantity": 8, "unit": "medium"},
+      {"name": "Taco Seasoning", "quantity": 2, "unit": "tbsp"},
+      {"name": "Lettuce", "quantity": 1, "unit": "cup"},
+      {"name": "Tomato", "quantity": 1, "unit": "medium"},
+      {"name": "Cheddar Cheese", "quantity": 2, "unit": "oz"},
+      {"name": "Sour Cream", "quantity": 4, "unit": "tbsp"},
+      {"name": "Salsa", "quantity": 4, "unit": "tbsp"}
+    ],
+    "instructions": "Brown ground beef in a skillet. Add taco seasoning and water per packet instructions. Warm tortillas. Fill with beef, diced tomato, shredded lettuce, cheese, sour cream, and salsa.",
+    "nutrition": {"calories": 480, "protein_g": 32, "fiber_g": 5}
+  },
+  {
+    "name": "Grilled Salmon with Broccoli",
+    "cuisine": "american",
+    "prep_time": 10,
+    "cook_time": 15,
+    "servings": 2,
+    "ingredients": [
+      {"name": "Salmon Fillet", "quantity": 10, "unit": "oz"},
+      {"name": "Broccoli", "quantity": 2, "unit": "cup"},
+      {"name": "Olive Oil", "quantity": 2, "unit": "tbsp"},
+      {"name": "Lemon", "quantity": 1, "unit": "medium"},
+      {"name": "Garlic", "quantity": 2, "unit": "clove"},
+      {"name": "Rice (Brown)", "quantity": 1, "unit": "cup cooked"}
+    ],
+    "instructions": "Season salmon with salt, pepper, garlic. Heat oil in a pan. Cook salmon 4-5 minutes per side. Steam or roast broccoli with olive oil and lemon. Serve with brown rice.",
+    "nutrition": {"calories": 510, "protein_g": 38, "fiber_g": 7}
+  },
+  {
+    "name": "Shrimp Fried Rice",
+    "cuisine": "asian",
+    "prep_time": 10,
+    "cook_time": 10,
+    "servings": 4,
+    "ingredients": [
+      {"name": "Shrimp", "quantity": 12, "unit": "oz"},
+      {"name": "Rice (White)", "quantity": 3, "unit": "cup cooked"},
+      {"name": "Eggs", "quantity": 2, "unit": "large egg"},
+      {"name": "Frozen Mixed Vegetables", "quantity": 1, "unit": "cup"},
+      {"name": "Soy Sauce", "quantity": 3, "unit": "tbsp"},
+      {"name": "Garlic", "quantity": 2, "unit": "clove"},
+      {"name": "Vegetable Oil", "quantity": 2, "unit": "tbsp"}
+    ],
+    "instructions": "Heat oil in a wok over high heat. Scramble eggs, remove. Cook shrimp until pink, remove. Stir fry vegetables and garlic. Add cold rice, soy sauce, and toss. Return eggs and shrimp, mix well.",
+    "nutrition": {"calories": 420, "protein_g": 30, "fiber_g": 3}
+  },
+  {
+    "name": "Omelette",
+    "cuisine": "american",
+    "prep_time": 5,
+    "cook_time": 5,
+    "servings": 1,
+    "ingredients": [
+      {"name": "Eggs", "quantity": 2, "unit": "large egg"},
+      {"name": "Cheddar Cheese", "quantity": 1, "unit": "oz"},
+      {"name": "Mushrooms", "quantity": 0.5, "unit": "cup"},
+      {"name": "Bell Pepper", "quantity": 0.25, "unit": "medium"},
+      {"name": "Butter", "quantity": 1, "unit": "tbsp"}
+    ],
+    "instructions": "Beat eggs with salt and pepper. Melt butter in a non-stick pan over medium heat. Pour in eggs. Cook until edges set. Add diced mushrooms, bell pepper, and cheese on one half. Fold and cook 1 more minute.",
+    "nutrition": {"calories": 340, "protein_g": 24, "fiber_g": 2}
+  },
+  {
+    "name": "Black Bean Tacos",
+    "cuisine": "mexican",
+    "prep_time": 5,
+    "cook_time": 10,
+    "servings": 4,
+    "ingredients": [
+      {"name": "Black Beans", "quantity": 2, "unit": "cup"},
+      {"name": "Corn Tortilla", "quantity": 8, "unit": "medium"},
+      {"name": "Salsa", "quantity": 4, "unit": "tbsp"},
+      {"name": "Lettuce", "quantity": 1, "unit": "cup"},
+      {"name": "Sour Cream", "quantity": 4, "unit": "tbsp"},
+      {"name": "Cilantro", "quantity": 2, "unit": "tbsp"},
+      {"name": "Lime", "quantity": 1, "unit": "medium"}
+    ],
+    "instructions": "Mash black beans slightly and warm in a pan with cumin and chili powder. Warm tortillas. Fill with beans, lettuce, salsa, sour cream, cilantro, and a squeeze of lime.",
+    "nutrition": {"calories": 340, "protein_g": 16, "fiber_g": 12}
+  },
+  {
+    "name": "Garlic Butter Shrimp Pasta",
+    "cuisine": "italian",
+    "prep_time": 5,
+    "cook_time": 15,
+    "servings": 4,
+    "ingredients": [
+      {"name": "Shrimp", "quantity": 12, "unit": "oz"},
+      {"name": "Pasta", "quantity": 4, "unit": "cup cooked"},
+      {"name": "Butter", "quantity": 3, "unit": "tbsp"},
+      {"name": "Garlic", "quantity": 4, "unit": "clove"},
+      {"name": "Parmesan Cheese", "quantity": 4, "unit": "tbsp"},
+      {"name": "Lemon", "quantity": 1, "unit": "medium"},
+      {"name": "Crushed Red Pepper", "quantity": 0.5, "unit": "tsp"}
+    ],
+    "instructions": "Cook pasta. Melt butter in a skillet, add garlic and red pepper flakes. Cook shrimp until pink. Toss in cooked pasta, lemon juice, and parmesan. Serve immediately.",
+    "nutrition": {"calories": 480, "protein_g": 28, "fiber_g": 2}
+  },
+  {
+    "name": "Chicken Quesadilla",
+    "cuisine": "mexican",
+    "prep_time": 10,
+    "cook_time": 10,
+    "servings": 2,
+    "ingredients": [
+      {"name": "Chicken Breast", "quantity": 8, "unit": "oz"},
+      {"name": "Flour Tortilla", "quantity": 4, "unit": "medium"},
+      {"name": "Cheddar Cheese", "quantity": 4, "unit": "oz"},
+      {"name": "Salsa", "quantity": 4, "unit": "tbsp"},
+      {"name": "Sour Cream", "quantity": 2, "unit": "tbsp"}
+    ],
+    "instructions": "Cook and shred chicken. Place tortilla in a dry pan, add cheese and chicken. Top with another tortilla. Cook until golden on each side. Serve with salsa and sour cream.",
+    "nutrition": {"calories": 510, "protein_g": 42, "fiber_g": 3}
+  },
+  {
+    "name": "Pork Chops with Rice",
+    "cuisine": "american",
+    "prep_time": 5,
+    "cook_time": 20,
+    "servings": 2,
+    "ingredients": [
+      {"name": "Pork Chop", "quantity": 12, "unit": "oz"},
+      {"name": "Rice (White)", "quantity": 1, "unit": "cup cooked"},
+      {"name": "Mushrooms", "quantity": 1, "unit": "cup"},
+      {"name": "Butter", "quantity": 1, "unit": "tbsp"},
+      {"name": "Garlic", "quantity": 2, "unit": "clove"}
+    ],
+    "instructions": "Season pork chops with salt and pepper. Melt butter in a skillet, sear chops 4 minutes per side. Remove and keep warm. Saute mushrooms and garlic in the same pan. Serve chops over rice with mushrooms.",
+    "nutrition": {"calories": 480, "protein_g": 35, "fiber_g": 1}
+  },
+  {
+    "name": "Italian Sausage and Peppers",
+    "cuisine": "italian",
+    "prep_time": 5,
+    "cook_time": 25,
+    "servings": 4,
+    "ingredients": [
+      {"name": "Italian Sausage", "quantity": 16, "unit": "oz"},
+      {"name": "Bell Pepper", "quantity": 2, "unit": "medium"},
+      {"name": "Onion", "quantity": 1, "unit": "medium"},
+      {"name": "Olive Oil", "quantity": 1, "unit": "tbsp"},
+      {"name": "Garlic", "quantity": 2, "unit": "clove"},
+      {"name": "Bread (White)", "quantity": 4, "unit": "slice"}
+    ],
+    "instructions": "Brown sausages in a skillet. Remove and slice. Saute sliced peppers and onions in olive oil until soft. Add garlic and sliced sausage. Cook 5 more minutes. Serve on crusty bread.",
+    "nutrition": {"calories": 540, "protein_g": 28, "fiber_g": 4}
+  },
+  {
+    "name": "Sheet Pan Chicken and Vegetables",
+    "cuisine": "american",
+    "prep_time": 15,
+    "cook_time": 30,
+    "servings": 4,
+    "ingredients": [
+      {"name": "Chicken Breast", "quantity": 16, "unit": "oz"},
+      {"name": "Potatoes", "quantity": 3, "unit": "medium"},
+      {"name": "Broccoli", "quantity": 2, "unit": "cup"},
+      {"name": "Carrot", "quantity": 2, "unit": "medium"},
+      {"name": "Olive Oil", "quantity": 3, "unit": "tbsp"},
+      {"name": "Garlic", "quantity": 3, "unit": "clove"},
+      {"name": "Paprika", "quantity": 1, "unit": "tsp"}
+    ],
+    "instructions": "Preheat oven to 425F. Chop chicken and veggies into equal pieces. Toss with olive oil, garlic, paprika, salt, pepper. Spread on sheet pan. Roast 25-30 minutes, flipping halfway.",
+    "nutrition": {"calories": 420, "protein_g": 36, "fiber_g": 6}
+  },
+  {
+    "name": "Scrambled Eggs with Toast",
+    "cuisine": "american",
+    "prep_time": 2,
+    "cook_time": 5,
+    "servings": 1,
+    "ingredients": [
+      {"name": "Eggs", "quantity": 3, "unit": "large egg"},
+      {"name": "Butter", "quantity": 1, "unit": "tbsp"},
+      {"name": "Bread (White)", "quantity": 2, "unit": "slice"}
+    ],
+    "instructions": "Beat eggs with a splash of milk, salt, and pepper. Melt butter in a non-stick pan over low heat. Pour in eggs and stir gently until just set. Toast bread. Serve eggs on toast.",
+    "nutrition": {"calories": 370, "protein_g": 22, "fiber_g": 2}
+  },
+  {
+    "name": "Chicken and Black Bean Bowl",
+    "cuisine": "mexican",
+    "prep_time": 10,
+    "cook_time": 15,
+    "servings": 4,
+    "ingredients": [
+      {"name": "Chicken Breast", "quantity": 16, "unit": "oz"},
+      {"name": "Black Beans", "quantity": 1, "unit": "cup"},
+      {"name": "Rice (Brown)", "quantity": 2, "unit": "cup cooked"},
+      {"name": "Salsa", "quantity": 4, "unit": "tbsp"},
+      {"name": "Lettuce", "quantity": 1, "unit": "cup"},
+      {"name": "Sour Cream", "quantity": 4, "unit": "tbsp"},
+      {"name": "Cilantro", "quantity": 2, "unit": "tbsp"},
+      {"name": "Lime", "quantity": 1, "unit": "medium"}
+    ],
+    "instructions": "Season and cook chicken, then dice. Warm black beans. Serve everything over rice with salsa, lettuce, sour cream, cilantro, and lime.",
+    "nutrition": {"calories": 480, "protein_g": 40, "fiber_g": 8}
+  },
+  {
+    "name": "Pasta with Garlic and Oil",
+    "cuisine": "italian",
+    "prep_time": 5,
+    "cook_time": 15,
+    "servings": 4,
+    "ingredients": [
+      {"name": "Pasta", "quantity": 4, "unit": "cup cooked"},
+      {"name": "Olive Oil", "quantity": 4, "unit": "tbsp"},
+      {"name": "Garlic", "quantity": 4, "unit": "clove"},
+      {"name": "Parmesan Cheese", "quantity": 4, "unit": "tbsp"},
+      {"name": "Crushed Red Pepper", "quantity": 0.5, "unit": "tsp"}
+    ],
+    "instructions": "Cook pasta. While pasta cooks, heat olive oil in a small pan. Add sliced garlic and red pepper flakes, cook until garlic is golden. Toss with hot pasta and parmesan.",
+    "nutrition": {"calories": 380, "protein_g": 12, "fiber_g": 2}
+  },
+  {
+    "name": "Loaded Nachos",
+    "cuisine": "mexican",
+    "prep_time": 10,
+    "cook_time": 10,
+    "servings": 4,
+    "ingredients": [
+      {"name": "Ground Beef", "quantity": 12, "unit": "oz"},
+      {"name": "Corn Tortilla", "quantity": 12, "unit": "medium"},
+      {"name": "Cheddar Cheese", "quantity": 4, "unit": "oz"},
+      {"name": "Salsa", "quantity": 4, "unit": "tbsp"},
+      {"name": "Sour Cream", "quantity": 4, "unit": "tbsp"},
+      {"name": "Black Beans", "quantity": 0.5, "unit": "cup"},
+      {"name": "Sliced Jalapenos", "quantity": 2, "unit": "tbsp"}
+    ],
+    "instructions": "Cut tortillas into triangles and bake until crisp. Brown beef with taco seasoning. Arrange chips on a sheet pan, top with beef, beans, and cheese. Broil until cheese melts. Top with salsa, sour cream, and jalapenos.",
+    "nutrition": {"calories": 560, "protein_g": 34, "fiber_g": 8}
+  }
+]
