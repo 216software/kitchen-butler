@@ -1,5 +1,7 @@
 # Kitchen Butler (KB)
 
+> **Requires Python 3.11+**
+
 A kitchen management app that tracks your pantry, logs meals, and suggests recipes. Exposes an **MCP server** so LLM tools (opencode, Claude Code, Cursor, Windsurf, etc.) can manage your kitchen data via natural language.
 
 ## Quick Start
@@ -10,15 +12,35 @@ python3 -m venv venv
 source venv/bin/activate
 pip install -e .
 kb init
-kb setup --name "Your Name" --calories 2500 --protein 100
+kb setup --name "Your Name" --calories 2500 --protein 100 --fiber 30
+```
 
-# Try it out:
+This initializes the database, seeds ingredients and recipes, and creates your user profile with daily nutritional goals.
+
+### Try it out
+
+```bash
+# Add some items to your pantry
 kb add "Chicken Breast" 16 --unit oz
 kb add "Broccoli" 2 --unit cup
 kb add "Rice (White)" 3 --unit "cup cooked"
+
+# See what's in your pantry
 kb pantry
+
+# See which recipes match what you have
 kb suggest
+
+# Check today's nutrition vs your goals
+kb day
 ```
+
+(`kb init` is safe to re-run — it skips seeding if the database already has data.)
+
+### Next steps
+
+- To use KB with an LLM tool (opencode, Claude Code, etc.), see **MCP Integration** below.
+- To add your own recipes, see `kb add-recipe` in the CLI table.
 
 ## CLI Usage
 
@@ -26,13 +48,40 @@ kb suggest
 |---|---|
 | `kb init` | Initialize database and seed with default data |
 | `kb setup` | Set up user profile and nutritional goals |
-| `kb add "Chicken Breast" 16` | Add an ingredient to your pantry |
+| `kb add <ingredient> <qty>` | Add an ingredient to your pantry |
+| `kb update <ingredient> <qty>` | Set an ingredient's quantity |
+| `kb remove <ingredient>` | Remove an ingredient from your pantry |
 | `kb pantry` | List all pantry items |
 | `kb suggest` | Suggest recipes based on pantry contents |
 | `kb day` | Show today's nutritional summary |
-| `kb db-path` | Show the database file path |
 | `kb serve` | Start the MCP server (stdio) |
-| `kb add-recipe <file>` | Import a recipe from JSON |
+| `kb db-path` | Show the database file path |
+| `kb add-recipe <file>` | Import a recipe from JSON (see format below) |
+
+### `kb add-recipe` JSON format
+
+```json
+{
+  "name": "My Recipe",
+  "cuisine": "italian",
+  "prep_time": 10,
+  "cook_time": 25,
+  "servings": 4,
+  "tags": ["dinner", "vegetarian"],
+  "ingredients": [
+    {"name": "Pasta", "quantity": 4, "unit": "cup cooked"},
+    {"name": "Garlic", "quantity": 3, "unit": "clove"}
+  ],
+  "nutrition": {
+    "calories": 400,
+    "protein_g": 15,
+    "fiber_g": 3
+  },
+  "instructions": "Cook pasta. Saute garlic..."
+}
+```
+
+Unknown ingredients are auto-created with category "imported" and zero nutrition.
 
 ## MCP Integration
 
@@ -75,7 +124,13 @@ Add to your project's `opencode.json` (copy from `opencode.json.example`):
 
 All use the same pattern — configure a stdio MCP server pointing to `<project>/venv/bin/kb serve`. See your tool's MCP documentation.
 
-Once configured, you can ask your LLM things like:
+### Test your setup
+
+```bash
+kb serve
+```
+
+Then ask your LLM tool:
 
 - "What's in my pantry?"
 - "What can I make for dinner with what I have?"
