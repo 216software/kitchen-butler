@@ -7,7 +7,7 @@ A kitchen management app that tracks your pantry, logs meals, and suggests recip
 ```bash
 python3 -m venv venv
 source venv/bin/activate
-pip install -e .
+pip install -e ".[dev]"    # omit [dev] to skip test dependencies
 
 # Initialize database and seed with ingredients + recipes
 kb init
@@ -70,6 +70,15 @@ Once configured, restart opencode. Then you can ask it things like:
 | `kb_get_nutrition_remaining` | Get remaining calories/protein/fiber for today |
 | `kb_get_user_preferences` | Get dietary likes/dislikes |
 | `kb_add_pantry_item` | Add an item to the pantry |
+
+## Tests
+
+```bash
+source venv/bin/activate
+python -m pytest tests/ -v
+```
+
+Requires `pytest` (install via `pip install pytest`).
 
 ## Data
 

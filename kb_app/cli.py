@@ -77,6 +77,26 @@ def suggest(top):
 
 
 @cli.command()
+@click.argument("ingredient")
+@click.argument("quantity", type=float)
+@click.option("--unit", default=None, help="Unit (defaults to ingredient default)")
+def update(ingredient, quantity, unit):
+    """Update/set the quantity for a pantry ingredient."""
+    from kb_app.engine.tools import update_pantry_item
+
+    click.echo(update_pantry_item(ingredient, quantity, unit))
+
+
+@cli.command()
+@click.argument("ingredient")
+def remove(ingredient):
+    """Remove an ingredient from your pantry entirely."""
+    from kb_app.engine.tools import delete_pantry_item
+
+    click.echo(delete_pantry_item(ingredient))
+
+
+@cli.command()
 def db_path():
     """Show the database file path."""
     click.echo(str(DB_PATH))

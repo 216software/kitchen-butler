@@ -219,9 +219,81 @@ def add_pantry_item(name: str, quantity: float, unit: str = None, expiry: str = 
         session.close()
         return f"Ingredient '{name}' not found."
     unit = unit or ing.default_unit
-    expiry_date = date.fromisoformat(expiry) if expiry else None
     ing_name = ing.name
+
+    existing = session.query(PantryItem).filter_by(
+        user_id=user.id, ingredient_id=ing.id, unit=unit,
+    ).first()
+
+    if existing:
+        if expiry:
+            existing.expiry_date = date.fromisoformat(expiry)
+        existing.quantity += quantity
+        new_qty = existing.quantity
+        session.commit()
+        session.close()
+        return f"Merged: {ing_name} now at {new_qty} {unit}."
+
+    expiry_date = date.fromisoformat(expiry) if expiry else None
     session.add(PantryItem(user_id=user.id, ingredient_id=ing.id, quantity=quantity, unit=unit, expiry_date=expiry_date))
     session.commit()
     session.close()
     return f"Added {quantity} {unit} of {ing_name} to pantry."
+
+
+def update_pantry_item(name: str, quantity: float, unit: str = None) -> str:
+    user, session = _ensure_user()
+    if not user:
+        return "No user found."
+    ing = session.query(Ingredient).filter(Ingredient.name.ilike(name)).first()
+    if not ing:
+        ing = session.query(Ingredient).filter(Ingredient.name.ilike(f"%{name}%")).first()
+    if not ing:
+        session.close()
+        return f"Ingredient '{name}' not found."
+    unit = unit or ing.default_unit
+    ing_name = ing.name
+
+    existing = session.query(PantryItem).filter_by(
+        user_id=user.id, ingredient_id=ing.id,
+    ).all()
+
+    if not existing:
+        session.add(PantryItem(user_id=user.id, ingredient_id=ing.id, quantity=quantity, unit=unit))
+        session.commit()
+        session.close()
+        return f"Added {quantity} {unit} of {ing_name} to pantry (no existing entry found)."
+
+    for item in existing:
+        session.delete(item)
+    session.add(PantryItem(user_id=user.id, ingredient_id=ing.id, quantity=quantity, unit=unit))
+    session.commit()
+    session.close()
+    return f"Set {ing_name} to {quantity} {unit}."
+
+
+def delete_pantry_item(name: str) -> str:
+    user, session = _ensure_user()
+    if not user:
+        return "No user found."
+    ing = session.query(Ingredient).filter(Ingredient.name.ilike(name)).first()
+    if not ing:
+        ing = session.query(Ingredient).filter(Ingredient.name.ilike(f"%{name}%")).first()
+    if not ing:
+        session.close()
+        return f"Ingredient '{name}' not found."
+    ing_name = ing.name
+
+    items = session.query(PantryItem).filter_by(
+        user_id=user.id, ingredient_id=ing.id,
+    ).all()
+
+    if not items:
+        session.close()
+        return f"{ing_name} not found in pantry."
+
+    for item in items:
+        session.delete(item)
+    session.commit()
+    session.close()
+    return f"Removed {ing_name} from pantry."

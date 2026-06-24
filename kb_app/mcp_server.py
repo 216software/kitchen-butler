@@ -2,7 +2,7 @@ from mcp.server.fastmcp import FastMCP
 from kb_app.engine.tools import (
     get_pantry, search_recipes, get_recipe_detail, get_nutrition_remaining,
     log_meal, get_user_preferences, get_meal_logs_today, suggest_recipes,
-    add_pantry_item,
+    add_pantry_item, update_pantry_item, delete_pantry_item,
 )
 
 mcp = FastMCP("Kitchen Brain")
@@ -66,8 +66,23 @@ def kb_suggest_recipes(max_results: int = 5) -> str:
 def kb_add_pantry_item(name: str, quantity: float, unit: str = None, expiry: str = None) -> str:
     """Add an ingredient to your pantry.
     Use standard food names like 'Chicken Breast', 'Eggs', 'Broccoli'.
+    Merges with existing entry if same ingredient + unit already exists.
     """
     return add_pantry_item(name, quantity, unit, expiry)
+
+
+@mcp.tool()
+def kb_update_pantry_item(name: str, quantity: float, unit: str = None) -> str:
+    """Update/set the quantity for a pantry ingredient. Replaces existing entries
+    (including duplicates) with a single row at the specified quantity.
+    """
+    return update_pantry_item(name, quantity, unit)
+
+
+@mcp.tool()
+def kb_delete_pantry_item(name: str) -> str:
+    """Remove an ingredient from your pantry entirely."""
+    return delete_pantry_item(name)
 
 
 def run_server():
