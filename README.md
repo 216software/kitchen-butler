@@ -1,10 +1,12 @@
 # Kitchen Butler (KB)
 
-> **Requires Python 3.11+**
-
 A kitchen management app that tracks your pantry, logs meals, and suggests recipes. Exposes an **MCP server** so LLM tools (opencode, Claude Code, Cursor, Windsurf, etc.) can manage your kitchen data via natural language.
 
 ## Quick Start
+
+Choose the install method that works best for you:
+
+### Option A: Local (requires Python 3.11+)
 
 ```bash
 git clone <repo-url> && cd kitchen-butler
@@ -13,34 +15,50 @@ source venv/bin/activate
 pip install -e .
 kb init
 kb setup --name "Your Name" --calories 2500 --protein 100 --fiber 30
-```
 
-This initializes the database, seeds ingredients and recipes, and creates your user profile with daily nutritional goals.
-
-### Try it out
-
-```bash
-# Add some items to your pantry
+# Try it out:
 kb add "Chicken Breast" 16 --unit oz
 kb add "Broccoli" 2 --unit cup
 kb add "Rice (White)" 3 --unit "cup cooked"
-
-# See what's in your pantry
 kb pantry
-
-# See which recipes match what you have
 kb suggest
-
-# Check today's nutrition vs your goals
 kb day
 ```
 
-(`kb init` is safe to re-run — it skips seeding if the database already has data.)
+### Option B: Docker
 
-### Next steps
+```bash
+docker build -t kitchen-butler .
 
-- To use KB with an LLM tool (opencode, Claude Code, etc.), see **MCP Integration** below.
-- To add your own recipes, see `kb add-recipe` in the CLI table.
+# Initialize the database (data persists in a named volume)
+docker run --rm -v kb-data:/data kitchen-butler init
+docker run --rm -v kb-data:/data kitchen-butler setup --name "Your Name" --calories 2500 --protein 100 --fiber 30
+
+# Try it out:
+docker run --rm -v kb-data:/data kitchen-butler add "Chicken Breast" 16 --unit oz
+docker run --rm -v kb-data:/data kitchen-butler add "Broccoli" 2 --unit cup
+docker run --rm -v kb-data:/data kitchen-butler add "Rice (White)" 3 --unit "cup cooked"
+docker run --rm -v kb-data:/data kitchen-butler pantry
+docker run --rm -v kb-data:/data kitchen-butler suggest
+docker run --rm -v kb-data:/data kitchen-butler day
+```
+
+The first `docker build` takes a minute. After that, all commands use the cached image.
+
+### Option C: pip from GitHub
+
+```bash
+pip install git+<repo-url>
+kb init
+kb setup --name "Your Name" --calories 2500 --protein 100 --fiber 30
+```
+
+No repo clone needed — installs directly into your current Python environment.
+
+### Notes
+
+- `kb init` is safe to re-run — it skips seeding if data already exists.
+- Your database lives at `~/.local/share/kitchen-butler/kb.db` (local) or in the `kb-data` Docker volume.
 
 ## CLI Usage
 
@@ -104,9 +122,22 @@ Alternatively, add to `~/.config/claude/claude_desktop_config.json`:
 }
 ```
 
+If using Docker, point to the container instead:
+
+```json
+{
+  "mcpServers": {
+    "kitchen-butler": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "-v", "kb-data:/data", "kitchen-butler", "kb", "serve"]
+    }
+  }
+}
+```
+
 ### opencode
 
-Add to your project's `opencode.json` (copy from `opencode.json.example`):
+Add to your project's `opencode.json`:
 
 ```json
 {
@@ -120,14 +151,32 @@ Add to your project's `opencode.json` (copy from `opencode.json.example`):
 }
 ```
 
+If using Docker:
+
+```json
+{
+  "mcp": {
+    "kitchen-butler": {
+      "type": "local",
+      "command": ["docker", "run", "-i", "--rm", "-v", "kb-data:/data", "kitchen-butler", "kb", "serve"],
+      "enabled": true
+    }
+  }
+}
+```
+
 ### Cursor / Windsurf / others
 
-All use the same pattern — configure a stdio MCP server pointing to `<project>/venv/bin/kb serve`. See your tool's MCP documentation.
+All use the same pattern — configure a stdio MCP server pointing to `<project>/venv/bin/kb serve` (local) or `docker run -i --rm -v kb-data:/data kitchen-butler kb serve` (Docker). See your tool's MCP documentation.
 
 ### Test your setup
 
 ```bash
+# Local
 kb serve
+
+# Docker
+docker run -i --rm -v kb-data:/data kitchen-butler kb serve
 ```
 
 Then ask your LLM tool:
@@ -158,10 +207,19 @@ Then ask your LLM tool:
 ## Tests
 
 ```bash
+# Local
 source venv/bin/activate
 python -m pytest tests/ -v
+
+# Docker
+docker run --rm kitchen-butler python -m pytest tests/ -v
 ```
 
 ## Data
 
-Database: `~/.local/share/kitchen-butler/kb.db`. Seeded with 65+ ingredients (with per-unit nutrition) and 24 recipes across American, Mexican, Italian, and Asian cuisines.
+Database location depends on your install method:
+- **Local:** `~/.local/share/kitchen-butler/kb.db`
+- **Docker:** persisted in the `kb-data` volume (`docker volume inspect kb-data`)
+- **pip from GitHub:** same as local
+
+Seeded with 65+ ingredients (with per-unit nutrition) and 24 recipes across American, Mexican, Italian, and Asian cuisines.
